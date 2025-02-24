@@ -3,12 +3,12 @@
 {% block content%}
 <article class="post-detail">
     <h1>{{ post.title }}</h1>
-    <p class="post-date">Опубликовано {{ post.created_at|date: 'd M Y' }}</p>
+    <p class="post-date">Опубликовано {{ post.created_at|date:'d M Y'}}</p>
     <p>
         <strong> Категории </strong>
         {% for category in post_categories %}
-        <a href="{% url 'blog:category-detail' category.pk %}"> {{ category.name }}</a>{% if not forloop.last %}, {%
-        endif %}
+        <a href="{% url 'blog:category-detail' category.pk %}"> {{ category.name }}</a>{% if not forloop.last %},
+        {% endif %}
         {% endfor %}
     </p>
     <p> {{ post.content }}</p>

@@ -20,9 +20,15 @@ from django.contrib import admin
 from django.urls import path, include
 from django.utils.http import parse_http_date
 from django.shortcuts import render
+from blog.models import Post, Category
 
 def home(request):
-    return render(request,'base.html')
+    posts = Post.objects.all()
+    categories = Category.objects.all()
+    context = {
+        'posts':posts,
+        'categories': categories}
+    return render(request,'blog/index.html',context)
 
 
 urlpatterns = [

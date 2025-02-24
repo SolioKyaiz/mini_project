@@ -39,8 +39,8 @@ def post_edit(request,pk):
             form.save()
             return redirect('blog:post-detail', pk=pk)
     else:
-        form = CreatePostForm(instance=Post)
-    return render(request,'blog/post_edit.html',{'form':form})
+        form = CreatePostForm(instance=post)
+    return render(request,'blog/post_edit.html',{'form':form,'post': post})
 
 @login_required()
 def post_delete(request,pk):
