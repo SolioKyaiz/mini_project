@@ -3,6 +3,7 @@ from blog.views import category, post, comment, like_dislike, bookmark
 from blog.views.category import category_detail, category_list
 from blog.views.post import post_list, post_edit,post_detail,post_create,post_delete
 
+
 app_name = 'blog'
 
 urlpatterns = [
@@ -24,5 +25,8 @@ urlpatterns = [
     #Likes and Dislikes and bookmarks
     path('posts/<int:pk>/like/', like_dislike.toggle_like, name = 'toggle-like'),
     path('posts/<int:pk>/dislike/', like_dislike.toggle_dislike, name = 'toggle-dislike'),
+    path('bookmarks/', bookmark.bookmark_list, name = 'bookmark-list'),
+    path('/bookmarks/<int:pk>/delete/', bookmark.bookmark_delete, name = 'bookmark-delete'),
     path('posts/<int:pk>/bookmark/', bookmark.toggle_bookmark, name = 'toggle-bookmark'),
+
 ]

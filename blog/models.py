@@ -1,3 +1,4 @@
+import os
 from django.db import models
 from account.models import User
 
@@ -104,3 +105,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.owner} написал(-a) комментарий {self.created_at}'
+
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+
+
+@receiver(post_delete,sender=Post)
+def post_delete_receiver(sender,instance,**kwargs):
+    if instance.art_image and os.path.isfile(instance.art_image.path):
+        os.remove(instance.art_image.path)

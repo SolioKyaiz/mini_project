@@ -18,17 +18,10 @@ from xml.etree.ElementInclude import include
 
 from django.contrib import admin
 from django.urls import path, include
-from django.utils.http import parse_http_date
-from django.shortcuts import render
-from blog.models import Post, Category
+from blog.views.home import home
+from django.conf import settings
+from django.conf.urls.static import static
 
-def home(request):
-    posts = Post.objects.all()
-    categories = Category.objects.all()
-    context = {
-        'posts':posts,
-        'categories': categories}
-    return render(request,'blog/index.html',context)
 
 
 urlpatterns = [
@@ -37,3 +30,7 @@ urlpatterns = [
     path('accounts/', include('account.urls', namespace="account")),
     path('blog/', include('blog.urls', namespace = "blog")),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

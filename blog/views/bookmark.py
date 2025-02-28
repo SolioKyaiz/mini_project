@@ -1,17 +1,28 @@
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect,render
 from django.contrib.auth.decorators import login_required
+from account.models import User
 from blog.models import Post
 
+
+@login_required
+def bookmark_list(request):
+    # bookmarks = User.objects.get(owner = request.user).bookmarks.all()
+    bookmarks = User.objects.get(pk = request.user.pk).bookmarks.all()
+    return render(request,'blog/bookmark.html',{'bookmarks':bookmarks})
 
 @login_required()
 def toggle_bookmark(request,pk):
     post = get_object_or_404(Post,pk = pk)
     if post.bookmarks.filter(id = request.user.id).exists():
-        post.bookmarks.remover(request.user)
-        bookmarked = False
+        post.bookmarks.remove(request.user)
     else:
         post.bookmarks.add(request.user)
-        bookmarked = True
-    context = {'bookmarked':bookmarked, 'bookmarked_count':post.bookmarks.count()}
-    return JsonResponse(context)
+    return redirect('blog:post-detail',pk=post.pk)
+
+@login_required()
+def bookmark_delete(request,pk):
+    post = get_object_or_404(Post,pk=pk)
+    post.bookmarks.remove(request.user)
+    return redirect('blog:bookmark-list')
+

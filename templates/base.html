@@ -11,11 +11,12 @@
     <header>
         <nav>
             <ul>
+                {% if user.is_authenticated %}
                 <li><a href="{% url 'home' %}">Главная</a></li>
                 <li><a href="{% url 'blog:category-list' %}">Категории</a></li>
-                {% if user.is_authenticated %}
-                    <li><a href="#">Профиль</a></li>
-                    <li><a href="#">Закладки</a></li>
+                <li><a href="{% url 'blog:post-create' %}">Создать пост</a></li>
+                    <li><a href="{% url 'account:profile' %}">Профиль</a></li>
+                    <li><a href="{% url 'blog:bookmark-list' %}">Закладки</a></li>
                     <li><a href="{% url 'account:logout' %}">Выйти</a></li>
                 {% else %}
                     <li><a href="{% url 'account:login' %}">Войти</a></li>

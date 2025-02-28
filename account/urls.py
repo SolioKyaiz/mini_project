@@ -8,12 +8,15 @@ from account.views.password import (
     CustomPasswordResetConfirmView,
     CustomPasswordResetCompleteView
 )
+from account.views.profile import profile,edit_profile
 
 app_name = 'account'
 
 urlpatterns = [
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
+    path('profile/', profile, name = 'profile'),
+    path('profile/edit',edit_profile,name='profile-edit'),
     path('register/', register, name='register'),
     path('activate/<uidb64>/<token>/', activate, name='activate'),
 ]
